@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Project = {
@@ -50,14 +52,113 @@ const projects: Project[] = [
 ];
 
 export default function MarketingAutomationPage() {
+  const [csvUrl, setCsvUrl] = useState("");
+  const [headers, setHeaders] = useState<string[]>([]);
+  const systemFields = [
+    "timestamp",
+    "name",
+    "phone",
+    "email",
+    "source",
+    "url_threads",
+    "url_instagram",
+    "url_blog",
+    "video_agree",
+    "privacy_consent",
+  ];
+  const suggested: Record<string, string> = {
+    timestamp: "타임스탬프",
+    name: "성함",
+    phone: "연락처",
+    email: "메일주소",
+    source: "어디에서 신청주셨나요?",
+    url_threads: "후기 작성할 스레드 URL",
+    url_instagram: "후기 작성할 인스타그램 URL",
+    url_blog: "후기 작성할 블로그 URL",
+    video_agree: "영상 촬영은 필수입니다. 가능하시죠?",
+    privacy_consent: "개인정보 활용 동의",
+  };
+  const [mapping, setMapping] = useState<Record<string, string>>(() => ({ ...suggested }));
+
+  async function fetchHeaders() {
+    const res = await fetch("/api/sheets/columns", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ csvUrl }),
+    });
+    const json = await res.json();
+    if (json?.headers) setHeaders(json.headers as string[]);
+  }
+
+  async function saveProject() {
+    const name = new URL(csvUrl).hostname || "신규 프로젝트";
+    await fetch("/api/projects/upsert", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, mapping }),
+    });
+  }
+
   return (
     <main className="py-8 space-y-6">
       <h1 className="text-2xl font-semibold">Marketing Automation</h1>
 
       {/* Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-        <Input placeholder="구글 시트 링크 입력" className="sm:flex-1" aria-label="구글 시트 링크 입력" />
-        <Button className="bg-[var(--accent)] text-[var(--bg)] hover:brightness-95">새 프로젝트 +</Button>
+        <Input
+          placeholder="구글 시트 웹게시 CSV 링크"
+          className="sm:flex-1"
+          aria-label="구글 시트 웹게시 CSV 링크"
+          value={csvUrl}
+          onChange={(e) => setCsvUrl(e.target.value)}
+        />
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="bg-[var(--accent)] text-[var(--bg)] hover:brightness-95">새 프로젝트 +</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>새 프로젝트</DialogTitle>
+              <DialogDescription>CSV 헤더를 불러와 시스템 필드와 매핑하세요.</DialogDescription>
+            </DialogHeader>
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <Input
+                  placeholder="구글 시트 웹게시 CSV 링크"
+                  aria-label="구글 시트 웹게시 CSV 링크"
+                  value={csvUrl}
+                  onChange={(e) => setCsvUrl(e.target.value)}
+                />
+                <Button onClick={fetchHeaders}>헤더 불러오기</Button>
+              </div>
+              {headers.length > 0 && (
+                <div className="space-y-2">
+                  {systemFields.map((sf) => (
+                    <div key={sf} className="flex items-center gap-3">
+                      <label className="w-44 text-sm text-[var(--fg)]/80">{sf}</label>
+                      <select
+                        className="h-10 px-3 rounded-md border border-[color:oklch(0.85_0.01_0)] bg-white/80 text-sm"
+                        value={mapping[sf] ?? ""}
+                        onChange={(e) => setMapping((m) => ({ ...m, [sf]: e.target.value }))}
+                      >
+                        <option value="">선택</option>
+                        {headers.map((h) => (
+                          <option key={h} value={h}>
+                            {h}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="flex justify-end gap-2 pt-2">
+                <Button variant="secondary" onClick={fetchHeaders}>다시 불러오기</Button>
+                <Button className="bg-[var(--accent)] text-[var(--bg)]" onClick={saveProject}>저장</Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Projects grid */}
