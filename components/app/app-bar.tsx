@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuthMock } from "@/components/auth/auth-provider";
 
 export function AppBar() {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 

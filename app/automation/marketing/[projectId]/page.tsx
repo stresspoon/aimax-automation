@@ -9,7 +9,7 @@ export default async function MarketingProjectPage({
       <div className="max-w-[1440px] mx-auto px-6">
         <div className="mb-2">
           {/* client back bar */}
-          <BackBarWrapper />
+          <BackBarClient />
         </div>
         <h1 className="text-2xl font-semibold">Project: {projectId}</h1>
       </div>
@@ -17,11 +17,6 @@ export default async function MarketingProjectPage({
   );
 }
 
-function BackBarWrapper() {
-  // import a dedicated client wrapper
-  // eslint-disable-next-line @next/next/no-html-link-for-pages
-  const Client = require("@/components/app/back-bar-client").default as React.ComponentType;
-  return <Client />;
-}
+import BackBarClient from "@/components/app/back-bar-client";
 
 
