@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toast";
 import { AppBar } from "@/components/app/app-bar";
+import { AuthProvider } from "@/components/auth/auth-provider";
 
 export const metadata: Metadata = {
   title: "AIMAX",
@@ -16,13 +17,12 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="antialiased bg-[var(--bg)] text-[var(--fg)]" suppressHydrationWarning>
-        {/* AppBar + Breadcrumbs */}
-        <AppBar />
-
-        {/* Main container */}
-        <div className="max-w-[1440px] mx-auto px-6">
-          {children}
-        </div>
+        <AuthProvider>
+          {/* AppBar */}
+          <AppBar />
+          {/* Main container */}
+          <div className="max-w-[1440px] mx-auto px-6">{children}</div>
+        </AuthProvider>
         <Toaster position="top-right" />
       </body>
     </html>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useAuthMock } from "@/components/auth/auth-provider";
 
 export function AppBar() {
   const pathname = usePathname();
@@ -18,7 +19,8 @@ export function AppBar() {
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
 
-  // 공개 상태에서는 Home만 노출 (로그인 상태 메뉴는 추후 표시)
+  const { isAuthenticated, login, logout } = useAuthMock();
+  // 공개 상태에서는 Home만 노출, 로그인 시 추후 protected 메뉴 표시 예정
   const nav = [{ href: "/", label: "Home" }];
 
   return (
@@ -49,32 +51,45 @@ export function AppBar() {
             })}
           </nav>
           <div className="relative" ref={menuRef}>
-            <button
-              type="button"
-              aria-label="프로필 메뉴"
-              aria-haspopup="menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((v) => !v)}
-              className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-[color:oklch(0.85_0.01_0)] bg-white/80 text-[var(--fg)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-            >
-              <span aria-hidden>👤</span>
-            </button>
-            {menuOpen && (
-              <div
-                role="menu"
-                aria-label="사용자 메뉴"
-                className="absolute right-0 mt-2 w-44 rounded-md border border-[color:oklch(0.85_0.01_0)] bg-white/95 shadow-md p-1 text-sm"
+            {!isAuthenticated ? (
+              <button
+                type="button"
+                onClick={() => login()}
+                className="h-9 px-3 rounded-md border border-[color:oklch(0.85_0.01_0)] bg-white/80 text-[var(--fg)] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
               >
-                <Link className="block px-3 py-2 rounded hover:bg-[var(--muted)]/10" href="/dashboard" role="menuitem">
-                  프로필
-                </Link>
-                <Link className="block px-3 py-2 rounded hover:bg-[var(--muted)]/10" href="/dashboard" role="menuitem">
-                  대시보드
-                </Link>
-                <button className="w-full text-left px-3 py-2 rounded hover:bg-[var(--muted)]/10" role="menuitem">
-                  로그아웃
+                로그인
+              </button>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  aria-label="프로필 메뉴"
+                  aria-haspopup="menu"
+                  aria-expanded={menuOpen}
+                  onClick={() => setMenuOpen((v) => !v)}
+                  className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-[color:oklch(0.85_0.01_0)] bg-white/80 text-[var(--fg)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                >
+                  <span aria-hidden>👤</span>
                 </button>
-              </div>
+                {menuOpen && (
+                  <div
+                    role="menu"
+                    aria-label="사용자 메뉴"
+                    className="absolute right-0 mt-2 w-44 rounded-md border border-[color:oklch(0.85_0.01_0)] bg-white/95 shadow-md p-1 text-sm"
+                  >
+                    <Link className="block px-3 py-2 rounded hover:bg-[var(--muted)]/10" href="/dashboard" role="menuitem">
+                      대시보드
+                    </Link>
+                    <button
+                      className="w-full text-left px-3 py-2 rounded hover:bg-[var(--muted)]/10"
+                      role="menuitem"
+                      onClick={() => logout()}
+                    >
+                      로그아웃
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
