@@ -4,16 +4,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-function toTitle(seg: string): string {
-  const map: Record<string, string> = {
-    dashboard: "Dashboard",
-    automation: "Automation",
-    marketing: "Marketing",
-    recruiting: "Recruiting",
-  };
-  return map[seg] ?? (seg ? seg.charAt(0).toUpperCase() + seg.slice(1) : "");
-}
-
 export function AppBar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -28,18 +18,8 @@ export function AppBar() {
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
 
-  const nav = [
-    { href: "/", label: "Home" },
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/automation/marketing", label: "Marketing" },
-    { href: "/automation/recruiting", label: "Recruiting" },
-  ];
-
-  const segments = pathname.split("/").filter(Boolean);
-  const crumbs = segments.map((seg, idx) => {
-    const href = "/" + segments.slice(0, idx + 1).join("/");
-    return { href, label: toTitle(seg) };
-  });
+  // 공개 상태에서는 Home만 노출 (로그인 상태 메뉴는 추후 표시)
+  const nav = [{ href: "/", label: "Home" }];
 
   return (
     <div>
@@ -99,29 +79,6 @@ export function AppBar() {
           </div>
         </div>
       </header>
-
-      {/* Breadcrumbs (header 높이 유지 위해 별도 영역) */}
-      <div className="bg-[var(--bg)]">
-        <div className="max-w-[1440px] mx-auto px-6 py-2 text-sm text-[var(--fg)]/70" aria-label="경로">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Link href="/" className="hover:text-[var(--fg)]">Home</Link>
-            {crumbs.map((c, i) => (
-              <span key={c.href} className="flex items-center gap-2">
-                <span aria-hidden>›</span>
-                {i < crumbs.length - 1 ? (
-                  <Link href={c.href} className="hover:text-[var(--fg)]">
-                    {c.label}
-                  </Link>
-                ) : (
-                  <span aria-current="page" className="text-[var(--fg)]">
-                    {c.label || ""}
-                  </span>
-                )}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
