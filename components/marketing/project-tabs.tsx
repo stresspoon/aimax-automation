@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
 
-type Rules = { blog: { min: number }; instagram: { min: number }; threads: { min: number } } & Record<string, any>;
+type ChannelRule = { min: number };
+type Rules = { blog: ChannelRule; instagram: ChannelRule; threads: ChannelRule } & Record<string, ChannelRule>;
 
 export function ProjectTabs({ projectId, projectName }: { projectId: string; projectName: string }) {
   const [tab, setTab] = useState<"rules" | "templates">("rules");

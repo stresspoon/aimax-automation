@@ -35,7 +35,7 @@ export function ProjectStats({ projectId }: { projectId: string }) {
     } catch {
       // env 미설정 시 구독 생략
     }
-  }, [projectId]);
+  }, [projectId, refresh]);
 
   return (
     <Card>

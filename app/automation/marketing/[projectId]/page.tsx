@@ -13,35 +13,19 @@ export default async function MarketingProjectPage({
         </div>
         <h1 className="text-2xl font-semibold mb-3">Project: {projectId}</h1>
         {/* live stats */}
-        {/* @ts-expect-error Client component import wrapper */}
-        <ProjectStatsWrapper projectId={projectId} />
+        <ProjectStatsClient projectId={projectId} />
         {/* actions */}
-        {/* @ts-expect-error Client component import wrapper */}
-        <ProjectActionsWrapper projectId={projectId} />
+        <ProjectActionsClient projectId={projectId} />
         {/* tabs */}
-        {/* @ts-expect-error Client component import wrapper */}
-        <ProjectTabsWrapper projectId={projectId} />
+        <ProjectTabsClient projectId={projectId} />
       </div>
     </main>
   );
 }
 
 import BackBarClient from "@/components/app/back-bar-client";
-
-function ProjectStatsWrapper({ projectId }: { projectId: string }) {
-  // dynamic import of client stats
-  const Comp = require("@/components/marketing/project-stats").ProjectStats as React.ComponentType<{ projectId: string }>;
-  return <Comp projectId={projectId} />;
-}
-
-function ProjectActionsWrapper({ projectId }: { projectId: string }) {
-  const Comp = require("@/components/marketing/project-actions").ProjectActions as React.ComponentType<{ projectId: string }>;
-  return <Comp projectId={projectId} />;
-}
-
-function ProjectTabsWrapper({ projectId }: { projectId: string }) {
-  const Comp = require("@/components/marketing/project-tabs").ProjectTabs as React.ComponentType<{ projectId: string; projectName: string }>; 
-  return <Comp projectId={projectId} projectName={`Project ${projectId}`} />;
-}
+import ProjectStatsClient from "@/components/marketing/project-stats-client";
+import ProjectActionsClient from "@/components/marketing/project-actions-client";
+import ProjectTabsClient from "@/components/marketing/project-tabs-client";
 
 

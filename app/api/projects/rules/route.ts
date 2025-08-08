@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     const { data, error } = await supabase.from("projects").select("rules_json").eq("id", projectId).single();
     if (error) throw error;
     return NextResponse.json({ rules: data?.rules_json ?? DEFAULT_RULES });
-  } catch (err: unknown) {
+  } catch {
     // fallback to default
     return NextResponse.json({ rules: DEFAULT_RULES, fallback: true });
   }
