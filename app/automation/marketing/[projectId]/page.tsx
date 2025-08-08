@@ -11,12 +11,29 @@ export default async function MarketingProjectPage({
           {/* client back bar */}
           <BackBarClient />
         </div>
-        <h1 className="text-2xl font-semibold">Project: {projectId}</h1>
+        <h1 className="text-2xl font-semibold mb-3">Project: {projectId}</h1>
+        {/* live stats */}
+        {/* @ts-expect-error Client component import wrapper */}
+        <ProjectStatsWrapper projectId={projectId} />
+        {/* actions */}
+        {/* @ts-expect-error Client component import wrapper */}
+        <ProjectActionsWrapper projectId={projectId} />
       </div>
     </main>
   );
 }
 
 import BackBarClient from "@/components/app/back-bar-client";
+
+function ProjectStatsWrapper({ projectId }: { projectId: string }) {
+  // dynamic import of client stats
+  const Comp = require("@/components/marketing/project-stats").ProjectStats as React.ComponentType<{ projectId: string }>;
+  return <Comp projectId={projectId} />;
+}
+
+function ProjectActionsWrapper({ projectId }: { projectId: string }) {
+  const Comp = require("@/components/marketing/project-actions").ProjectActions as React.ComponentType<{ projectId: string }>;
+  return <Comp projectId={projectId} />;
+}
 
 
