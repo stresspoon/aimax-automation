@@ -17,7 +17,7 @@ export default async function MarketingProjectPage({
         {/* actions */}
         <ProjectActionsClient projectId={projectId} />
         {/* tabs */}
-        <ProjectTabsClient projectId={projectId} />
+        <ProjectTabsClient projectId={projectId} projectName={`Project ${projectId}`} />
       </div>
     </main>
   );

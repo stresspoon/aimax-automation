@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSupabase } from "@/lib/supabase/client";
 
@@ -8,13 +8,13 @@ type Counts = { total: number; selected: number; rejected: number; pending: numb
 export function ProjectStats({ projectId }: { projectId: string }) {
   const [counts, setCounts] = useState<Counts>({ total: 0, selected: 0, rejected: 0, pending: 0 });
 
-  async function refresh() {
+  const refresh = useCallback(async () => {
     try {
       const res = await fetch(`/api/applicants/counts?projectId=${encodeURIComponent(projectId)}`, { cache: "no-store" });
       const json = await res.json();
       if (json && json.counts) setCounts(json.counts as Counts);
     } catch {}
-  }
+  }, [projectId]);
 
   useEffect(() => {
     refresh();
