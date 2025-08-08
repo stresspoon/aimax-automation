@@ -9,7 +9,6 @@ export default async function MarketingProjectPage({
       <div className="max-w-[1440px] mx-auto px-6">
         <div className="mb-2">
           {/* client back bar */}
-          {/* @ts-expect-error Server/Client boundary described */}
           <BackBarWrapper />
         </div>
         <h1 className="text-2xl font-semibold">Project: {projectId}</h1>
