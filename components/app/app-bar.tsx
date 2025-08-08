@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 // import { cn } from "@/lib/utils";
 import { useAuthMock } from "@/components/auth/auth-provider";

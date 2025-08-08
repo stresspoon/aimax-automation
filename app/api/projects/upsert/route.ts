@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase/client";
+import { getSupabase } from "@/lib/supabase/client";
 
 export const runtime = "edge";
 
@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "mapping is required" }, { status: 400 });
     }
 
+    const supabase = getSupabase();
     const { data, error } = await supabase.from("projects").upsert(
       [{ name, mapping_json: mapping }],
       { onConflict: "name" }
