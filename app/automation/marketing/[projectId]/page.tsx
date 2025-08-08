@@ -17,10 +17,10 @@ export default async function MarketingProjectPage({
   );
 }
 
+import dynamic from "next/dynamic";
+const BackBar = dynamic(() => import("@/components/app/back-bar").then(m => m.BackBar), { ssr: false });
+
 function BackBarWrapper() {
-  // dynamic import locally to avoid server import issues
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { BackBar } = require("@/components/app/back-bar");
   return <BackBar />;
 }
 

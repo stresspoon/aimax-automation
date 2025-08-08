@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const headers = parsed?.data?.[0] as string[] | undefined;
     if (!headers || headers.length === 0) throw new Error("No headers found");
     return NextResponse.json({ headers });
-  } catch (e) {
+  } catch {
     // fallback mock
     const mock = [
       "타임스탬프",
