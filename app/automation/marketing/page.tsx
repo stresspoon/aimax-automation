@@ -102,7 +102,17 @@ export default function MarketingAutomationPage() {
 
   return (
     <main className="py-8 space-y-6">
-      <h1 className="text-2xl font-semibold">Marketing Automation</h1>
+      <div className="flex items-center gap-3">
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-2 text-sm px-2.5 py-1.5 rounded-md border border-[color:oklch(0.85_0.01_0)] bg-white/80 hover:bg-white"
+          aria-label="대시보드로 이동"
+        >
+          <span aria-hidden>←</span>
+          <span className="hidden sm:inline">대시보드</span>
+        </Link>
+        <h1 className="text-2xl font-semibold">Marketing Automation</h1>
+      </div>
 
       {/* Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
