@@ -20,8 +20,6 @@ export function AppBar() {
   }, []);
 
   const { isAuthenticated, login, logout } = useAuthMock();
-  // 공개 상태에서는 Home만 노출, 로그인 시 추후 protected 메뉴 표시 예정
-  const nav = [{ href: "/", label: "Home" }];
 
   return (
     <div>
@@ -30,26 +28,7 @@ export function AppBar() {
           <Link href="/" aria-label="홈으로 이동" className="font-semibold text-lg tracking-tight">
             AIMAX
           </Link>
-          <nav className="hidden sm:flex items-center gap-5" aria-label="주요 메뉴">
-            {nav.map((item) => {
-              const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "text-sm font-medium leading-6 transition-colors",
-                    active
-                      ? "text-[var(--fg)] border-b-2 border-[var(--accent)] pb-1"
-                      : "text-[var(--fg)]/70 hover:text-[var(--fg)]"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
+          <nav aria-label="주요 메뉴" className="hidden sm:flex items-center gap-5" />
           <div className="relative" ref={menuRef}>
             {!isAuthenticated ? (
               <button
