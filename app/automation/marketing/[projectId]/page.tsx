@@ -17,11 +17,11 @@ export default async function MarketingProjectPage({
   );
 }
 
-import dynamic from "next/dynamic";
-const BackBar = dynamic(() => import("@/components/app/back-bar").then(m => m.BackBar), { ssr: false });
-
 function BackBarWrapper() {
-  return <BackBar />;
+  // import a dedicated client wrapper
+  // eslint-disable-next-line @next/next/no-html-link-for-pages
+  const Client = require("@/components/app/back-bar-client").default as React.ComponentType;
+  return <Client />;
 }
 
 
