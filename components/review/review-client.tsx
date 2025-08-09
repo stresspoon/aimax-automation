@@ -13,6 +13,7 @@ export default function ReviewClient({ token, invite, guide }: { token: string; 
   const [outline, setOutline] = useState<string>("");
   const [draft, setDraft] = useState<string>("");
   const [checks, setChecks] = useState<{ ok: boolean; details: string[] }>({ ok: false, details: [] });
+  const [submitUrl, setSubmitUrl] = useState<string>("");
   const remaining = Math.max(0, (invite.credits ?? 0) - (invite.used ?? 0));
 
   function generateOutline() {
@@ -58,6 +59,24 @@ export default function ReviewClient({ token, invite, guide }: { token: string; 
   }
 
   const disabled = remaining <= 0;
+
+  async function submitPost() {
+    try {
+      const res = await fetch("/api/review/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, url: submitUrl, channel }),
+      });
+      const json = await res.json();
+      if (!res.ok || json?.ok === false) {
+        toast.error(json?.suggest || "검증 실패");
+        return;
+      }
+      toast.success("제출되었습니다");
+    } catch {
+      toast.error("제출 실패");
+    }
+  }
 
   return (
     <div className="space-y-4">
@@ -107,8 +126,22 @@ export default function ReviewClient({ token, invite, guide }: { token: string; 
           </div>
         </CardContent>
       </Card>
+
+      <Card>
+        <CardContent className="p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-medium">게시글 업로드</div>
+            <div className="flex items-center gap-2">
+              <Input className="w-80" placeholder="게시글 URL" value={submitUrl} onChange={(e) => setSubmitUrl(e.target.value)} />
+              <Button className="bg-[var(--ok)] text-white" onClick={submitPost} disabled={!submitUrl}>업로드 완료</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
+
+// within component scope
 
 
