@@ -8,7 +8,8 @@ export async function POST(req: NextRequest) {
   try {
     const { slug } = await req.json();
     if (!slug) return NextResponse.json({ error: "slug required" }, { status: 400 });
-    const uid = cookies().get("aimax_uid")?.value;
+    const store = await cookies();
+    const uid = store.get("aimax_uid")?.value;
     if (!uid) return NextResponse.json({ error: "not logged in" }, { status: 401 });
 
     const result = await grantEntitlement({ slug, userId: uid });
