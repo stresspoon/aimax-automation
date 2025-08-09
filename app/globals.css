@@ -10,18 +10,7 @@
   --warn: #b36b00;
   --err: #c62828;
   --muted: #8a8a8a;
-}
-
-/* Tailwind v4 inline theme bindings */
-@theme inline {
-  --color-bg: var(--bg);
-  --color-fg: var(--fg);
-  --color-accent: var(--accent);
-  --color-ok: var(--ok);
-  --color-warn: var(--warn);
-  --color-err: var(--err);
-  --color-muted: var(--muted);
-
+  
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
