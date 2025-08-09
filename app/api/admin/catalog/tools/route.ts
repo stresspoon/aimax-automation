@@ -4,14 +4,15 @@ import { getSupabase } from "@/lib/supabase/client";
 
 export const runtime = "edge";
 
-function assertAdmin() {
-  const uid = cookies().get("aimax_uid")?.value;
+async function assertAdmin() {
+  const store = await cookies();
+  const uid = store.get("aimax_uid")?.value;
   if (uid !== "u_1") throw new Error("forbidden");
 }
 
 export async function GET() {
   try {
-    assertAdmin();
+    await assertAdmin();
     const supabase = getSupabase();
     const { data, error } = await supabase.from("catalog_tools").select("*").order("created_at", { ascending: false });
     if (error) throw error;
@@ -25,7 +26,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    assertAdmin();
+    await assertAdmin();
     const body = await req.json();
     const {
       id,
@@ -73,7 +74,7 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    assertAdmin();
+    await assertAdmin();
     const { searchParams } = new URL(req.url);
     const slug = searchParams.get("slug");
     if (!slug) return NextResponse.json({ error: "slug required" }, { status: 400 });
