@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useAuthMock } from "@/components/auth/auth-provider";
 
 type Tool = {
   id: string;
@@ -19,6 +20,8 @@ type Tool = {
 export function ToolsSection() {
   const [active, setActive] = useState<Tool[]>([]);
   const [inactive, setInactive] = useState<Tool[]>([]);
+  const { user } = useAuthMock();
+  const isAdmin = user?.id === "u_1";
 
   useEffect(() => {
     (async () => {
@@ -58,7 +61,7 @@ export function ToolsSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {inactive.map((t) => (
               <div key={t.id} className="opacity-70">
-                <Card className="cursor-not-allowed" title="오픈 예정">
+                <Card className="cursor-not-allowed pointer-events-none" title="오픈 예정">
                   <CardHeader>
                     <div className="flex items-center gap-2">
                       <CardTitle>{t.title}</CardTitle>
@@ -66,6 +69,18 @@ export function ToolsSection() {
                     </div>
                     <CardDescription>{t.subtitle}</CardDescription>
                   </CardHeader>
+                  <CardContent>
+                    {isAdmin && (
+                      <div className="pointer-events-auto mt-2">
+                        <Link
+                          href={`/tools/${t.slug}?preview=1`}
+                          className="inline-flex items-center h-9 px-3 rounded-md border text-sm bg-white hover:bg-white"
+                        >
+                          프리뷰
+                        </Link>
+                      </div>
+                    )}
+                  </CardContent>
                 </Card>
               </div>
             ))}
