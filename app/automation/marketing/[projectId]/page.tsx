@@ -1,3 +1,8 @@
+import BackBarClient from "@/components/app/back-bar-client";
+import ProjectStatsClient from "@/components/marketing/project-stats-client";
+import ProjectActionsClient from "@/components/marketing/project-actions-client";
+import ProjectTabsClient from "@/components/marketing/project-tabs-client";
+
 export default async function MarketingProjectPage({
   params,
 }: {
@@ -22,10 +27,5 @@ export default async function MarketingProjectPage({
     </main>
   );
 }
-
-import BackBarClient from "@/components/app/back-bar-client";
-import ProjectStatsClient from "@/components/marketing/project-stats-client";
-import ProjectActionsClient from "@/components/marketing/project-actions-client";
-import ProjectTabsClient from "@/components/marketing/project-tabs-client";
 
 
