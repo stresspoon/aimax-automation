@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ToolsSection } from "@/components/dashboard/tools-section";
 
 export default function DashboardPage() {
   return (
     <main className="py-8">
       <h1 className="text-2xl font-semibold mb-6">Dashboard</h1>
-      <section
-        aria-label="자동화 기능"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
+      <h2 className="text-xl font-semibold mb-3">자동화 도구</h2>
+      <section aria-label="자동화 기능" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <Link href="/automation/marketing" className="group focus:outline-none focus:ring-2 focus:ring-[var(--accent)] rounded-xl">
           <Card className="h-full transition-colors group-hover:bg-white">
             <CardHeader>
@@ -43,6 +42,9 @@ export default function DashboardPage() {
           </Card>
         </div>
       </section>
+
+      {/* 개별 판매 도구 섹션 */}
+      <ToolsSection />
     </main>
   );
 }
