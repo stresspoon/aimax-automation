@@ -12,9 +12,17 @@ export function ProjectTabs({ projectId, projectName }: { projectId: string; pro
   const [tab, setTab] = useState<"rules" | "templates" | "review">("rules");
   const [rules, setRules] = useState<Rules>({ blog: { min: 300 }, instagram: { min: 1000 }, threads: { min: 500 } });
   const [template, setTemplate] = useState<string>(
-    "{{name}}님, {{project}} 모집 관련 안내드립니다.\n\n참여 여부 회신 부탁드립니다."
+    "{{name}}님, {{project}} 모집 관련 안내드립니다.\n\n아래 링크에서 리뷰 도우미로 가이드를 확인해 주세요:\n{{review_link}}\n\n참여 여부 회신 부탁드립니다."
   );
-  const preview = useMemo(() => template.replaceAll("{{name}}", "홍길동").replaceAll("{{project}}", projectName), [template, projectName]);
+  const preview = useMemo(() => {
+    const dummyToken = "testtoken123";
+    const base = typeof window !== "undefined" ? window.location.origin : "https://example.com";
+    const link = `${base}/review/${dummyToken}`;
+    return template
+      .replaceAll("{{name}}", "홍길동")
+      .replaceAll("{{project}}", projectName)
+      .replaceAll("{{review_link}}", link);
+  }, [template, projectName]);
 
   useEffect(() => {
     (async () => {

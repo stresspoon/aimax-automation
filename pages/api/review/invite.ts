@@ -27,6 +27,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const expiresAt = new Date(Date.now() + ttlDays * 86400000).toISOString()
 
     const admin = supabaseAdmin()
+
+    // If invite already exists for this applicant, return existing without creating
+    const { data: existing } = await admin
+      .from('review_invites')
+      .select('token, credits, used, expires_at')
+      .eq('applicant_id', applicantId)
+      .maybeSingle()
+
+    if (existing) {
+      const base = process.env.APP_BASE_URL || 'http://localhost:3000'
+      const link = `${base}/review/${existing.token}`
+      const remaining = (existing.credits ?? 0) - (existing.used ?? 0)
+      return res.status(200).json({ ok: true, token: existing.token, link, expiresAt: existing.expires_at, remaining })
+    }
+
     const { data, error } = await admin
       .from('review_invites')
       .insert({
@@ -36,14 +51,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         credits,
         expires_at: expiresAt
       })
-      .select('token, expires_at')
+      .select('token, credits, used, expires_at')
       .single()
 
     if (error) return res.status(500).json({ error: error.message })
 
     const base = process.env.APP_BASE_URL || 'http://localhost:3000'
     const link = `${base}/review/${data.token}`
-    return res.status(200).json({ ok: true, token: data.token, link, expiresAt: data.expires_at })
+    const remaining = (data.credits ?? 0) - (data.used ?? 0)
+    return res.status(200).json({ ok: true, token: data.token, link, expiresAt: data.expires_at, remaining })
   } catch (e) {
     const message = e instanceof Error ? e.message : 'unknown'
     return res.status(500).json({ error: message })
