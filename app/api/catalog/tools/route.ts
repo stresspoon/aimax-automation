@@ -21,6 +21,7 @@ const SEED: Tool[] = [
   { id: "seed-3", slug: "blog_neighbor_plus", title: "네이버 블로그 서이추+이웃댓글 자동화", subtitle: "관계 증폭 자동화", badge: "준비 중", price_cents: 0, currency: "KRW", is_active: false, icon_url: null },
   { id: "seed-4", slug: "smartstore_review_autoreply", title: "스마트 스토어 리뷰 자동답글", subtitle: "리뷰 대응 자동화", badge: "준비 중", price_cents: 0, currency: "KRW", is_active: false, icon_url: null },
   { id: "seed-5", slug: "place_review_autoreply", title: "플레이스 리뷰 자동 답글", subtitle: "맵 리뷰 케어", badge: "준비 중", price_cents: 0, currency: "KRW", is_active: false, icon_url: null },
+  { id: "seed-6", slug: "review-writer", title: "리뷰 글쓰기 자동화", subtitle: "선정자에게 가이드+초안 3회 제공", badge: "내부 베타", price_cents: 0, currency: "KRW", is_active: false, icon_url: null },
 ];
 
 export async function GET(_req: NextRequest) {

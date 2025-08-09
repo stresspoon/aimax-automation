@@ -57,8 +57,8 @@ export function ToolsSection() {
           <div className="text-sm text-[var(--fg)]/70">준비 중</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {inactive.map((t) => (
-              <div key={t.id} className="opacity-70 pointer-events-none">
-                <Card>
+              <div key={t.id} className="opacity-70">
+                <Card className="cursor-not-allowed" title="오픈 예정">
                   <CardHeader>
                     <div className="flex items-center gap-2">
                       <CardTitle>{t.title}</CardTitle>
