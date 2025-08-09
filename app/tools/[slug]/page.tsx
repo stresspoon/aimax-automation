@@ -28,23 +28,27 @@ export default async function ToolDetail({
   // access control
   let allow = !!tool.is_active;
   let isAdmin = false;
-  if (!allow && preview) {
-    if (!isProd) {
-      allow = true;
-    } else {
-      const uid = cookies().get("aimax_uid")?.value;
-      if (!uid) return Forbidden();
+  const uid = cookies().get("aimax_uid")?.value;
+  if (uid) {
+    try {
       const { data: prof } = await supabase
         .from("profiles")
         .select("user_role")
         .eq("id", uid)
         .maybeSingle();
       isAdmin = prof?.user_role === "admin";
+    } catch {}
+  }
+  if (!allow && preview) {
+    if (!isProd) {
+      allow = true;
+    } else {
+      if (!uid) return Forbidden();
       if (isAdmin) allow = true; else return Forbidden();
     }
   }
 
-  if (!allow) notFound();
+  if (!allow) return <OpenPlanned title={tool.title} subtitle={tool.subtitle} slug={tool.slug} showPreview={isAdmin} />;
 
   return (
     <main className="py-8">
@@ -86,6 +90,30 @@ function Forbidden() {
     <main className="py-16 text-center">
       <h1 className="text-2xl font-semibold mb-2">403 Forbidden</h1>
       <p className="text-[var(--fg)]/70">접근 권한이 없습니다.</p>
+    </main>
+  );
+}
+
+function OpenPlanned({ title, subtitle, slug, showPreview }: { title: string; subtitle: string; slug: string; showPreview: boolean }) {
+  return (
+    <main className="py-16">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <CardTitle>{title}</CardTitle>
+            <span className="text-xs px-2 py-0.5 rounded bg-[var(--muted)]/30">준비 중</span>
+          </div>
+          <CardDescription>{subtitle}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex items-center justify-between">
+          <button className="h-10 px-4 rounded-md border text-sm opacity-60 cursor-not-allowed" disabled>
+            구매하기(비활성)
+          </button>
+          {showPreview && (
+            <Link href={`/tools/${slug}?preview=1`} className="underline">프리뷰로 열기</Link>
+          )}
+        </CardContent>
+      </Card>
     </main>
   );
 }
