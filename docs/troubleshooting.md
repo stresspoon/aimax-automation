@@ -73,4 +73,15 @@
   - `yarn dev -p 3000`
 - ESLint 플러그인 설치: `yarn add -D eslint-plugin-react eslint-plugin-react-hooks @next/eslint-plugin-next`
 
+### 환경변수 템플릿 (.env)
+프로젝트 루트에 `.env`를 생성하고 아래 키를 설정하세요.
+
+```
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+STRIPE_WEBHOOK_SECRET=
+TOSS_SECRET=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
 
