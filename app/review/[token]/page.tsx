@@ -1,11 +1,12 @@
 import { supabaseAdmin } from '@/lib/supabaseAdmin'
 
-export default async function ReviewEntry({ params }: { params: { token: string } }) {
+export default async function ReviewEntry({ params }: { params: Promise<{ token: string }> }) {
+  const { token } = await params
   const admin = supabaseAdmin()
   const { data, error } = await admin
     .from('review_invites')
     .select('credits, used, expires_at, status')
-    .eq('token', params.token)
+    .eq('token', token)
     .single()
 
   if (error || !data) return <div className="p-8">유효하지 않거나 만료된 초대입니다.</div>

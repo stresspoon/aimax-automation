@@ -1,7 +1,7 @@
 // app/api/review/invite/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'node:crypto' // Node 런타임 가정
-import { supabaseAdmin } from '../../../../lib/supabaseAdmin'  // ← 상대경로
+import { supabaseAdmin } from '@/lib/supabaseAdmin'
 
 export const runtime = 'nodejs' // Edge가 아니라 Node에서 돌릴 것
 
