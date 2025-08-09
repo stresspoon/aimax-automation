@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:applicants": "node scripts/seed_applicants.mjs",
+    "fix:rules": "node scripts/fix_default_rules.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
@@ -35,7 +37,5 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
-    "seed:applicants": "node scripts/seed_applicants.mjs",
-    "fix:rules": "node scripts/fix_default_rules.mjs"
   }
 }
