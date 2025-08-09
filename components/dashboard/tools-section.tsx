@@ -36,7 +36,7 @@ export function ToolsSection() {
       {active.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {active.map((t) => (
-            <Link key={t.id} href={`/#tool/${t.slug}`} className="group">
+            <Link key={t.id} href={`/tools/${t.slug}`} className="group">
               <Card className="transition-colors group-hover:bg-white">
                 <CardHeader>
                   <CardTitle>{t.title}</CardTitle>

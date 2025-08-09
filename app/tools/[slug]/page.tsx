@@ -40,9 +40,18 @@ export default async function ToolDetail({ params }: { params: Promise<{ slug: s
         </CardHeader>
         <CardContent className="flex items-center justify-between">
           <div className="text-lg font-semibold">{(tool.price_cents / 100).toLocaleString()} {tool.currency}</div>
-          <Link href={`/checkout?tool=${tool.slug}`} className="inline-flex items-center h-10 px-4 rounded-md bg-[var(--accent)] text-[var(--bg)]">구매하기</Link>
+          <div className="flex items-center gap-2">
+            <Link href={`/checkout?tool=${tool.slug}`} className="inline-flex items-center h-10 px-4 rounded-md bg-[var(--accent)] text-[var(--bg)]">구매하기</Link>
+            <form action="/api/checkout/test-grant" method="post">
+              <input type="hidden" name="slug" value={tool.slug} />
+              <button type="submit" className="h-10 px-3 rounded-md border text-sm">테스트 부여</button>
+            </form>
+          </div>
         </CardContent>
       </Card>
+      <div className="mt-6 text-right">
+        <Link href={`/tools/${tool.slug}/use`} className="underline">바로가기</Link>
+      </div>
     </main>
   );
 }

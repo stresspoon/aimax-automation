@@ -31,9 +31,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     () => ({
       isAuthenticated: !!user,
       user,
-      login: () =>
-        setUser({ id: "u_1", name: "AIMAX User", email: "user@example.com" }),
-      logout: () => setUser(null),
+      login: () => {
+        const u = { id: "u_1", name: "AIMAX User", email: "user@example.com" } as User;
+        setUser(u);
+        try { document.cookie = `aimax_uid=${u.id}; Path=/; SameSite=Lax`; } catch {}
+      },
+      logout: () => {
+        setUser(null);
+        try { document.cookie = `aimax_uid=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; SameSite=Lax`; } catch {}
+      },
     }),
     [user]
   );
