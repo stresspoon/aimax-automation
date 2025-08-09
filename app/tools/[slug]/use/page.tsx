@@ -4,7 +4,8 @@ import { getSupabase } from "@/lib/supabase/client";
 
 export default async function UseToolPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const uid = cookies().get("aimax_uid")?.value;
+  const cookieStore = await cookies();
+  const uid = cookieStore.get("aimax_uid")?.value;
   if (!uid) redirect(`/tools/${slug}`);
   const supabase = getSupabase();
   const { data: product } = await supabase.from("products").select("id").eq("slug", slug).single();

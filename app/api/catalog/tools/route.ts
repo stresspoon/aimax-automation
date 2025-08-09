@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase/client";
 
 export const runtime = "edge";
@@ -24,7 +24,7 @@ const SEED: Tool[] = [
   { id: "seed-6", slug: "review-writer", title: "리뷰 글쓰기 자동화", subtitle: "선정자에게 가이드+초안 3회 제공", badge: "내부 베타", price_cents: 0, currency: "KRW", is_active: false, icon_url: null },
 ];
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   try {
     const supabase = getSupabase();
     const { data, error } = await supabase.from("catalog_tools").select("id,slug,title,subtitle,badge,price_cents,currency,is_active,icon_url");

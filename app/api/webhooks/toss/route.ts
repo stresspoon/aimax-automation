@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export async function POST(_req: NextRequest) {
+export async function POST() {
   try {
     const secret = process.env.TOSS_SECRET;
     console.log("toss webhook hit", { configured: !!secret });
