@@ -22,6 +22,7 @@ export function ToolsSection() {
   const [inactive, setInactive] = useState<Tool[]>([]);
   const { user } = useAuthMock();
   const isAdmin = user?.id === "u_1";
+  const allowPreview = (process.env.NEXT_PUBLIC_AIMAX_ENV || process.env.AIMAX_ENV || "prod") !== "prod" && isAdmin;
 
   useEffect(() => {
     (async () => {
@@ -70,7 +71,7 @@ export function ToolsSection() {
                     <CardDescription>{t.subtitle}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    {isAdmin && (
+                    {allowPreview && (
                       <div className="pointer-events-auto mt-2">
                         <Link
                           href={`/tools/${t.slug}?preview=1`}

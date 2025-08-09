@@ -4,6 +4,29 @@ import { cookies } from "next/headers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getSupabase } from "@/lib/supabase/client";
 
+function PreviewBanner() {
+  return (
+    <div className="w-full text-sm px-3 py-2 bg-[var(--accent)]/10 text-[var(--fg)] border border-[var(--accent)]/30 rounded mb-4">
+      프리뷰 모드 — 비활성 도구입니다.
+    </div>
+  );
+}
+
+function PreviewScaffold({ slug }: { slug: string }) {
+  return (
+    <div className="max-w-3xl mx-auto py-8">
+      <PreviewBanner />
+      <h1 className="text-2xl font-semibold mb-2">미리보기: {slug}</h1>
+      <p className="text-[var(--fg)]/70 mb-6">실제 데이터 연결 전 스텁입니다. 섹션/카피/레이아웃만 확인하세요.</p>
+      <div className="grid gap-4">
+        <div className="p-4 border rounded">히어로 섹션</div>
+        <div className="p-4 border rounded">기능 섹션</div>
+        <div className="p-4 border rounded">CTA 섹션</div>
+      </div>
+    </div>
+  );
+}
+
 export default async function ToolDetail({
   params,
   searchParams,
@@ -16,6 +39,11 @@ export default async function ToolDetail({
   const previewParam = sp?.preview;
   const preview = Array.isArray(previewParam) ? previewParam.includes("1") : previewParam === "1";
   const isProd = process.env.AIMAX_ENV === "prod";
+
+  // 프리뷰 (로컬/스테이징): DB 없이 더미 렌더
+  if (preview && !isProd) {
+    return <PreviewScaffold slug={slug} />;
+  }
 
   const supabase = getSupabase();
   const { data: tool } = await supabase
