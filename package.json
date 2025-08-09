@@ -35,5 +35,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+    "seed:applicants": "node scripts/seed_applicants.mjs",
+    "fix:rules": "node scripts/fix_default_rules.mjs"
   }
 }
