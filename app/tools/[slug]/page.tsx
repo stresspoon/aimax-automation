@@ -1,33 +1,58 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Tool } from "@/lib/catalog/types";
+import { getSupabase } from "@/lib/supabase/client";
 
-async function fetchTool(slug: string): Promise<Tool | null> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/api/catalog/tools`, { cache: "no-store" });
-  const json = await res.json();
-  const all: Tool[] = [...(json.active ?? []), ...(json.inactive ?? [])];
-  return all.find((t) => t.slug === slug) ?? null;
-}
-
-export default async function ToolDetail({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ToolDetail({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[]>>;
+}) {
   const { slug } = await params;
-  const tool = await fetchTool(slug);
+  const sp = await searchParams;
+  const previewParam = sp?.preview;
+  const preview = Array.isArray(previewParam) ? previewParam.includes("1") : previewParam === "1";
+  const isProd = process.env.AIMAX_ENV === "prod";
+
+  const supabase = getSupabase();
+  const { data: tool } = await supabase
+    .from("catalog_tools")
+    .select("id,slug,title,subtitle,badge,price_cents,currency,is_active,icon_url")
+    .eq("slug", slug)
+    .maybeSingle();
   if (!tool) notFound();
-  if (!tool.is_active) {
-    // 준비 중 화면 또는 404로 처리
-    return (
-      <main className="py-16 text-center">
-        <h1 className="text-2xl font-semibold mb-2">준비 중</h1>
-        <p className="text-[var(--fg)]/70">곧 오픈 예정입니다.</p>
-        <div className="mt-6">
-          <Link href="/tools" className="underline">목록으로</Link>
-        </div>
-      </main>
-    );
+
+  // access control
+  let allow = !!tool.is_active;
+  let isAdmin = false;
+  if (!allow && preview) {
+    if (!isProd) {
+      allow = true;
+    } else {
+      const uid = cookies().get("aimax_uid")?.value;
+      if (!uid) return Forbidden();
+      const { data: prof } = await supabase
+        .from("profiles")
+        .select("user_role")
+        .eq("id", uid)
+        .maybeSingle();
+      isAdmin = prof?.user_role === "admin";
+      if (isAdmin) allow = true; else return Forbidden();
+    }
   }
+
+  if (!allow) notFound();
+
   return (
     <main className="py-8">
+      {preview && !tool.is_active && (
+        <div className="mb-3 text-xs text-[var(--fg)]/80 border border-[color:oklch(0.85_0.01_0)] rounded px-3 py-1">
+          프리뷰 모드 — 비활성 도구입니다.
+        </div>
+      )}
       <Card>
         <CardHeader>
           <div className="flex items-center gap-3 justify-between">
@@ -52,6 +77,15 @@ export default async function ToolDetail({ params }: { params: Promise<{ slug: s
       <div className="mt-6 text-right">
         <Link href={`/tools/${tool.slug}/use`} className="underline">바로가기</Link>
       </div>
+    </main>
+  );
+}
+
+function Forbidden() {
+  return (
+    <main className="py-16 text-center">
+      <h1 className="text-2xl font-semibold mb-2">403 Forbidden</h1>
+      <p className="text-[var(--fg)]/70">접근 권한이 없습니다.</p>
     </main>
   );
 }
