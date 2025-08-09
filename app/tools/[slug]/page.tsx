@@ -56,7 +56,8 @@ export default async function ToolDetail({
   // access control
   let allow = !!tool.is_active;
   let isAdmin = false;
-  const uid = cookies().get("aimax_uid")?.value;
+  const cookieStore = await cookies();
+  const uid = cookieStore.get("aimax_uid")?.value;
   if (uid) {
     try {
       const { data: prof } = await supabase
