@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
   try {
     const secret = process.env.STRIPE_WEBHOOK_SECRET;
     console.log("stripe webhook hit", { configured: !!secret });

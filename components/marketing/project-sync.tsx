@@ -38,7 +38,7 @@ export function ProjectSync({ projectId }: { projectId: string }) {
         await new Promise((r) => setTimeout(r, 150));
       }
       toast.success("동기화 완료");
-    } catch (e) {
+    } catch {
       toast.error("동기화 실패");
     } finally {
       setLoading(false);

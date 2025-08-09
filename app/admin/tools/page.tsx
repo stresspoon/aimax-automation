@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import AdminToolsClient from "@/components/admin/tools-client";
 
 export default async function AdminToolsPage() {
-  const uid = cookies().get("aimax_uid")?.value;
+  const cookieStore = await cookies();
+  const uid = cookieStore.get("aimax_uid")?.value;
   if (uid !== "u_1") redirect("/dashboard");
   return (
     <main className="py-8">
