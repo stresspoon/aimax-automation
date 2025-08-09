@@ -44,7 +44,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const base = process.env.APP_BASE_URL || 'http://localhost:3000'
     const link = `${base}/review/${data.token}`
     return res.status(200).json({ ok: true, token: data.token, link, expiresAt: data.expires_at })
-  } catch (e: any) {
-    return res.status(500).json({ error: e?.message || 'unknown' })
+  } catch (e) {
+    const message = e instanceof Error ? e.message : 'unknown'
+    return res.status(500).json({ error: message })
   }
 }
