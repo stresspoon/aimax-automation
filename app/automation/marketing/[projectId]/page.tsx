@@ -3,6 +3,7 @@ import ProjectStatsClient from "@/components/marketing/project-stats-client";
 import ProjectActionsClient from "@/components/marketing/project-actions-client";
 import ProjectTabsClient from "@/components/marketing/project-tabs-client";
 import ProjectSyncClient from "@/components/marketing/project-sync-client";
+import PendingListClient from "@/components/marketing/pending-list-client";
 
 export default async function MarketingProjectPage({
   params,
@@ -26,6 +27,8 @@ export default async function MarketingProjectPage({
         <ProjectTabsClient projectId={projectId} projectName={`Project ${projectId}`} />
         {/* sheet sync */}
         <ProjectSyncClient projectId={projectId} />
+        {/* pending list */}
+        <PendingListClient projectId={projectId} />
       </div>
     </main>
   );

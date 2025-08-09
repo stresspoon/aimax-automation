@@ -11,9 +11,10 @@ export async function GET(req: NextRequest) {
 
     const supabase = getSupabase();
     const tables = [
-      { key: "selected", filter: "status=eq.selected" },
-      { key: "rejected", filter: "status=eq.rejected" },
-      { key: "pending", filter: "status=eq.pending" },
+      { key: "selected" },
+      { key: "rejected" },
+      { key: "pending" },
+      { key: "failed" },
     ] as const;
 
     const { count: total } = await supabase.from("applicants").select("id", { count: "exact", head: true }).eq("project_id", projectId);
@@ -32,6 +33,7 @@ export async function GET(req: NextRequest) {
       selected: results.find(([k]) => k === "selected")?.[1] ?? 0,
       rejected: results.find(([k]) => k === "rejected")?.[1] ?? 0,
       pending: results.find(([k]) => k === "pending")?.[1] ?? 0,
+      failed: results.find(([k]) => k === "failed")?.[1] ?? 0,
     };
     return NextResponse.json({ counts });
   } catch (err: unknown) {
