@@ -31,11 +31,6 @@ export function ProjectTabs({ projectId, projectName }: { projectId: string; pro
         const json = await res.json();
         if (json?.rules) setRules(json.rules);
       } catch {}
-      try {
-        const r = await fetch(`/api/reviews/packs?projectId=${projectId}`);
-        const j = await r.json();
-        if (j?.guide) setGuide(j.guide);
-      } catch {}
     })();
   }, [projectId]);
 
@@ -181,7 +176,7 @@ function ReviewGuideSection({ projectId }: { projectId: string }) {
             <div className="text-sm font-medium">공통</div>
             <div className="flex items-center gap-3">
               <span className="w-28 text-sm text-[var(--fg)]/80">톤</span>
-              <select className="border rounded px-2 py-1 text-sm" value={guide.common.tone} onChange={(e) => setGuide({ ...guide, common: { ...guide.common, tone: e.target.value as any } })}>
+              <select className="border rounded px-2 py-1 text-sm" value={guide.common.tone} onChange={(e) => setGuide({ ...guide, common: { ...guide.common, tone: e.target.value as "정보형" | "친근" | "전문" } })}>
                 <option value="정보형">정보형</option>
                 <option value="친근">친근</option>
                 <option value="전문">전문</option>

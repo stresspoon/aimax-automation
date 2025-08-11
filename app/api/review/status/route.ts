@@ -16,7 +16,16 @@ export async function GET(req: NextRequest) {
       .select("id, applicant_id, credits, used, expires_at")
       .eq("project_id", projectId);
 
-    const items: any[] = [];
+    const items: Array<{
+      invite_id: string;
+      applicant: string | null;
+      channel: string;
+      credits: number;
+      used: number;
+      expires_at: string;
+      url: string | null;
+      passed: boolean | null;
+    }> = [];
     for (const inv of invites ?? []) {
       const { data: app } = await supabase.from("applicants").select("name").eq("id", inv.applicant_id).maybeSingle();
       const { data: sub } = await supabase
@@ -33,7 +42,7 @@ export async function GET(req: NextRequest) {
         used: inv.used,
         expires_at: inv.expires_at,
         url: sub?.url ?? null,
-        passed: sub?.checks?.ok ?? null,
+        passed: (sub?.checks as { ok?: boolean })?.ok ?? null,
       });
     }
 

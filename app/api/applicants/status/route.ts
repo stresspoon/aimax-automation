@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     if (status === "selected") {
       // fetch applicant project's id
       const { data: applicant } = await supabase.from("applicants").select("project_id").eq("id", applicantId).maybeSingle();
-      const projectId = (applicant as any)?.project_id;
+      const projectId = applicant?.project_id;
       if (projectId) {
         try {
           const base = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
