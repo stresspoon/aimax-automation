@@ -10,22 +10,21 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  default: "bg-[var(--accent)] text-white hover:brightness-95",
-  secondary: "bg-[var(--muted)]/20 text-[var(--fg)] hover:bg-[var(--muted)]/30",
-  outline:
-    "border border-[color:oklch(0.85_0.01_0)] text-[var(--fg)] hover:bg-[var(--muted)]/10",
-  ghost: "hover:bg-[var(--muted)]/10",
-  destructive: "bg-[var(--err)] text-white hover:brightness-95",
+  default: "bg-[var(--accent)] text-[var(--bg)] hover:brightness-110 shadow-sm",
+  secondary: "bg-transparent border-2 border-[var(--border)] text-[var(--fg)] hover:border-[var(--fg)]/30",
+  outline: "border-2 border-[var(--border)] bg-transparent text-[var(--fg)] hover:bg-[var(--fg)]/5",
+  ghost: "hover:bg-[var(--fg)]/5",
+  destructive: "bg-transparent text-[var(--err)] border-2 border-[var(--err)] hover:bg-[var(--err)] hover:text-[var(--bg)]",
 };
 
 const sizes: Record<NonNullable<ButtonProps["size"]>, string> = {
-  sm: "h-8 px-3",
-  md: "h-10 px-4",
-  lg: "h-12 px-6 text-base",
-  icon: "h-10 w-10",
+  sm: "h-9 px-4 text-xs",
+  md: "h-[var(--row-height)] px-6",
+  lg: "h-12 px-8 text-base",
+  icon: "h-[var(--row-height)] w-[var(--row-height)]",
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

@@ -17,11 +17,17 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="antialiased bg-[var(--bg)] text-[var(--fg)]" suppressHydrationWarning>
+        {/* Skip to content link for screen readers */}
+        <a href="#main-content" className="sr-only focus:not-sr-only">
+          메인 콘텐츠로 건너뛰기
+        </a>
         <AuthProvider>
           {/* AppBar */}
           <AppBar />
           {/* Main container */}
-          <div className="max-w-[1440px] mx-auto px-6">{children}</div>
+          <main id="main-content" className="max-w-[1440px] mx-auto px-6" tabIndex={-1}>
+            {children}
+          </main>
         </AuthProvider>
         <Toaster position="top-right" />
       </body>
