@@ -28,7 +28,11 @@ export async function POST(req: NextRequest) {
       .eq("project_id", invite.project_id)
       .order("created_at", { ascending: false })
       .maybeSingle();
-    const guide: any = pack?.rules_json ?? {};
+    const guide = pack?.rules_json as {
+      common?: { requiredKeywords?: string[]; linkTargets?: string[] };
+      blog?: { paragraphLength?: { min?: number } };
+      social?: { sentenceLength?: { min?: number } };
+    } | null ?? {};
 
     // fetch html
     const resp = await fetch(url, { headers: { "User-Agent": "AIMAX-ReviewBot" } });

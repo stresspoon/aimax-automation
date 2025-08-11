@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     await supabase
       .from("logs")
-      .insert([{ action: "review-generate", actor: ip, meta: { token, kind, ua }, created_at: nowIso } as any]);
+      .insert([{ action: "review-generate", actor: ip, meta: { token, kind, ua }, created_at: nowIso }]);
 
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {

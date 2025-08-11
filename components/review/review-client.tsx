@@ -1,12 +1,27 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/toast";
 
 type Invite = { id: string; project_id: string; credits: number; used: number; expires_at: string };
-type Guide = any;
+type Guide = {
+  common?: {
+    tone?: string;
+    requiredKeywords?: string[];
+    linkTargets?: string[];
+    cta?: string;
+  };
+  blog?: {
+    subheadingCount?: number;
+    paragraphLength?: { min?: number; max?: number };
+  };
+  social?: {
+    hashtags?: string[];
+    sentenceLength?: { min?: number; max?: number };
+  };
+} | null;
 
 export default function ReviewClient({ token, invite, guide }: { token: string; invite: Invite; guide: Guide }) {
   const [channel, setChannel] = useState<"blog" | "instagram" | "threads">("blog");
