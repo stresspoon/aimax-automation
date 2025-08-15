@@ -26,7 +26,15 @@
       "Bash(npx shadcn@latest add:*)",
       "Bash(npx:*)",
       "Bash(git rm:*)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(find:*)",
+      "Bash(for:*)",
+      "Bash(do)",
+      "Bash(if [ -f \"$file\" ])",
+      "Bash(then)",
+      "Bash(sed:*)",
+      "Bash(fi)",
+      "Bash(done)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
