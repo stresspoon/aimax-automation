@@ -21,7 +21,8 @@
       "Bash(open http://localhost:3001)",
       "Bash(curl:*)",
       "Bash(open http://localhost:3001/test)",
-      "Bash(screencapture:*)"
+      "Bash(screencapture:*)",
+      "Bash(cp:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
