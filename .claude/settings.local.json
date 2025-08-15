@@ -25,7 +25,8 @@
       "Bash(cp:*)",
       "Bash(npx shadcn@latest add:*)",
       "Bash(npx:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(git ls-tree:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
