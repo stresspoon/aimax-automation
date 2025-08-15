@@ -22,7 +22,10 @@
       "Bash(curl:*)",
       "Bash(open http://localhost:3001/test)",
       "Bash(screencapture:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(npx:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
