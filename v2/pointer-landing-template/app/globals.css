@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Updated to AIMAX color scheme: background #f2f1ef, text #131313, accent #ff3d00 */
+    --background: 40 8% 95%; /* #f2f1ef */
+    --foreground: 0 0% 7%; /* #131313 */
+
+    --muted: 40 8% 90%; /* #e8e6e3 */
+    --muted-foreground: 0 0% 7% / 0.7; /* rgba(19, 19, 19, 0.7) */
+    --muted-foreground-light: 0 0% 7% / 0.5; /* rgba(19, 19, 19, 0.5) */
+    --muted-foreground-dark: 0 0% 7% / 0.6; /* rgba(19, 19, 19, 0.6) */
+
+    --card: 40 8% 98%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 40 8% 95%;
+    --popover-foreground: 0 0% 7%;
+
+    /* Primary Accent Colors */
+    --primary: 14 100% 50%; /* #ff3d00 */
+    --primary-foreground: 0 0% 100%; /* white text on orange */
+    --primary-dark: 14 100% 45%; /* darker orange */
+    --primary-light: 14 100% 85%; /* lighter orange for subtle accents */
+
+    /* Secondary Accent Colors */
+    --secondary: 40 8% 90%; /* #e8e6e3 */
+    --secondary-foreground: 0 0% 7%; /* #131313 */
+
+    --accent: 40 8% 85%; /* #ddd9d5 */
+    --accent-foreground: 0 0% 7%; /* #131313 */
+
+    --border: 0 0% 7% / 0.08; /* rgba(19, 19, 19, 0.08) */
+    --border-light: 0 0% 7% / 0.1; /* rgba(19, 19, 19, 0.1) */
+    --border-dark: 0 0% 7% / 0.05; /* rgba(19, 19, 19, 0.05) */
+
+    --ring: 14 100% 50%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Ensuring consistent background color across entire page */
+    min-height: 100vh;
+  }
+
+  /* Adding global background consistency */
+  html {
+    @apply bg-background;
+  }
+}

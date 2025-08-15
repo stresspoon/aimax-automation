@@ -13,8 +13,17 @@
       "Bash(npm run dev:*)",
       "Bash(lsof:*)",
       "Bash(rm:*)",
-      "Bash(sudo:*)"
+      "Bash(sudo:*)",
+      "Bash(git checkout:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(open http://localhost:3001)",
+      "Bash(curl:*)",
+      "Bash(open http://localhost:3001/test)",
+      "Bash(screencapture:*)"
     ],
-    "deny": []
+    "deny": [],
+    "defaultMode": "acceptEdits"
   }
 }
