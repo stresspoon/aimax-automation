@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
-
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -20,21 +19,21 @@ export async function GET(
       )
     }
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .select('*, campaigns(name, status)')
+    const { data: order, error } = await supabase
+      .from('orders')
+      .select('*')
       .eq('id', id)
       .eq('user_id', user.id)
       .single()
 
-    if (error || !project) {
+    if (error || !order) {
       return NextResponse.json(
-        { error: 'Project not found' },
+        { error: 'Order not found' },
         { status: 404 }
       )
     }
 
-    return NextResponse.json(project)
+    return NextResponse.json(order)
   } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -62,11 +61,21 @@ export async function PUT(
     }
 
     const body = await request.json()
+    
+    // Only allow updating certain fields
+    const allowedUpdates = ['status', 'shipping_info', 'payment_method']
+    const updates: any = {}
+    
+    for (const field of allowedUpdates) {
+      if (body[field] !== undefined) {
+        updates[field] = body[field]
+      }
+    }
 
-    const { data: project, error } = await supabase
-      .from('projects')
+    const { data: order, error } = await supabase
+      .from('orders')
       .update({
-        ...body,
+        ...updates,
         updated_at: new Date().toISOString()
       })
       .eq('id', id)
@@ -81,14 +90,14 @@ export async function PUT(
       )
     }
 
-    if (!project) {
+    if (!order) {
       return NextResponse.json(
-        { error: 'Project not found' },
+        { error: 'Order not found' },
         { status: 404 }
       )
     }
 
-    return NextResponse.json(project)
+    return NextResponse.json(order)
   } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -115,8 +124,23 @@ export async function DELETE(
       )
     }
 
+    // Check if order can be deleted (only pending orders)
+    const { data: existingOrder } = await supabase
+      .from('orders')
+      .select('status')
+      .eq('id', id)
+      .eq('user_id', user.id)
+      .single()
+
+    if (existingOrder && existingOrder.status !== 'pending') {
+      return NextResponse.json(
+        { error: 'Cannot delete non-pending orders' },
+        { status: 400 }
+      )
+    }
+
     const { error } = await supabase
-      .from('projects')
+      .from('orders')
       .delete()
       .eq('id', id)
       .eq('user_id', user.id)
@@ -128,7 +152,7 @@ export async function DELETE(
       )
     }
 
-    return NextResponse.json({ message: 'Project deleted successfully' })
+    return NextResponse.json({ message: 'Order deleted successfully' })
   } catch {
     return NextResponse.json(
       { error: 'Internal server error' },

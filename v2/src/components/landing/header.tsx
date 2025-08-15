@@ -1,13 +1,25 @@
 "use client"
 
 import type React from "react"
-
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   const navItems = [
     { name: "기능", href: "#features-section" },
     { name: "가격", href: "#pricing-section" },
@@ -24,7 +36,12 @@ export function Header() {
   }
 
   return (
-    <header className="w-full py-4 px-6">
+    <header className={cn(
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6",
+      isScrolled 
+        ? "bg-background/80 backdrop-blur-md border-b border-border/50 shadow-sm" 
+        : "bg-transparent"
+    )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
@@ -44,9 +61,9 @@ export function Header() {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="#" target="_blank" rel="noopener noreferrer" className="hidden md:block">
-            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-6 py-2 rounded-full font-medium shadow-sm">
-              무료 체험
+          <Link href="/signup" className="hidden md:block">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-full font-bold shadow-sm">
+              무료 체험 시작하기
             </Button>
           </Link>
           <Sheet>
@@ -71,9 +88,9 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <Link href="#" target="_blank" rel="noopener noreferrer" className="w-full mt-4">
-                  <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-6 py-2 rounded-full font-medium shadow-sm">
-                    무료 체험
+                <Link href="/signup" className="w-full mt-4">
+                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-full font-bold shadow-sm w-full">
+                    무료 체험 시작하기
                   </Button>
                 </Link>
               </nav>

@@ -64,11 +64,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { 
       name, 
-      type, 
-      google_sheet_url,
-      target_audience,
-      email_template,
-      content_settings
+      data = {}
     } = body
 
     const { data: campaign, error } = await supabase
@@ -76,11 +72,7 @@ export async function POST(request: NextRequest) {
       .insert({
         user_id: user.id,
         name,
-        type,
-        google_sheet_url,
-        target_audience,
-        email_template,
-        content_settings,
+        data,
         status: 'draft'
       })
       .select()

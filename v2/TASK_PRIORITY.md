@@ -36,6 +36,8 @@
   - [x] 사용자 API
   - [x] 프로젝트 API
   - [x] 캠페인 API
+  - [x] 주문(Orders) API
+  - [x] 도구 구매(Tool Purchases) API
 
 #### 2. 고객모집 자동화 실제 연동
 - [ ] Gemini API 연동
@@ -174,6 +176,10 @@
   - ✅ Supabase 연동 설정 완료
   - ✅ 챗봇 팝업 UI 구현
   - ✅ 기본 CRUD API 구현 (사용자, 캠페인, 프로젝트)
+  - ✅ 주문(Orders) CRUD API 구현 완료
+  - ✅ 도구 구매(Tool Purchases) CRUD API 구현 완료
+  - ✅ TypeScript 타입 정의 및 API 클라이언트 라이브러리 구축
+  - ✅ API 테스트 페이지 구현 (/api-test)
 
 ---
 
