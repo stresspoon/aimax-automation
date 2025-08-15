@@ -30,7 +30,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
    ```
 3. 다음 파일들을 순서대로 실행:
    - `supabase/migrations/001_initial_schema.sql` - 테이블 생성 (아직 테이블이 없는 경우)
-   - `supabase/migrations/002_enable_rls_safe.sql` - RLS 안전하게 활성화 (기존 테이블만 처리)
+   - `supabase/migrations/002_enable_rls_simple.sql` - RLS 활성화 (Security Advisor 경고 해결)
 4. 각 파일 내용을 복사하여 SQL Editor에 붙여넣기 후 실행
 
 ### 방법 2: Supabase CLI 사용 (선택사항)
