@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createUser } from '@/lib/db';
-import { generateToken } from '@/lib/auth';
+import { createClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,56 +32,71 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 사용자 생성
-    const user = await createUser({
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+
+    // Supabase로 사용자 생성
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      name,
-      phone,
-      companyName,
-      agreeMarketing: agreeMarketing || false,
+      options: {
+        data: {
+          full_name: name,
+          phone,
+          company_name: companyName,
+          agree_marketing: agreeMarketing || false,
+        }
+      }
     });
 
-    // JWT 토큰 생성
-    const token = generateToken({
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-    });
+    if (error) {
+      if (error.message.includes('already registered')) {
+        return NextResponse.json(
+          { error: '이미 사용 중인 이메일입니다' },
+          { status: 409 }
+        );
+      }
+      throw error;
+    }
 
-    // 응답 생성 및 쿠키 설정
-    const response = NextResponse.json(
+    if (!data.user) {
+      return NextResponse.json(
+        { error: '회원가입 중 오류가 발생했습니다' },
+        { status: 500 }
+      );
+    }
+
+    // 프로필 생성
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert({
+        id: data.user.id,
+        email: data.user.email,
+        full_name: name,
+        username: email.split('@')[0],
+        phone,
+        company_name: companyName,
+        agree_marketing: agreeMarketing || false,
+      });
+
+    if (profileError) {
+      console.error('Profile creation error:', profileError);
+    }
+
+    return NextResponse.json(
       {
         success: true,
         user: {
-          id: user.id,
-          email: user.email,
-          name: user.name,
+          id: data.user.id,
+          email: data.user.email,
+          name: name,
         },
       },
       { status: 201 }
     );
-
-    // HTTP-only 쿠키로 토큰 저장
-    response.cookies.set('auth-token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 7일
-      path: '/',
-    });
-
-    return response;
   } catch (error: any) {
     console.error('Signup error:', error);
     
-    if (error.message === '이미 존재하는 이메일입니다') {
-      return NextResponse.json(
-        { error: '이미 사용 중인 이메일입니다' },
-        { status: 409 }
-      );
-    }
-
     return NextResponse.json(
       { error: '회원가입 중 오류가 발생했습니다' },
       { status: 500 }

@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { resetPassword } from '@/lib/db';
+import { createClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { token, password } = body;
+    const { code, password } = body;
 
-    if (!token || !password) {
+    if (!code || !password) {
       return NextResponse.json(
         { error: '필수 정보가 누락되었습니다' },
         { status: 400 }
@@ -20,13 +21,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 비밀번호 재설정
-    const success = await resetPassword(token, password);
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
 
-    if (!success) {
+    // Exchange the code for a session
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (exchangeError) {
       return NextResponse.json(
         { error: '유효하지 않거나 만료된 토큰입니다' },
         { status: 400 }
+      );
+    }
+
+    // Update the user's password
+    const { error: updateError } = await supabase.auth.updateUser({
+      password: password
+    });
+
+    if (updateError) {
+      return NextResponse.json(
+        { error: '비밀번호 변경 중 오류가 발생했습니다' },
+        { status: 500 }
       );
     }
 

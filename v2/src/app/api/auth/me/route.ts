@@ -1,41 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyToken } from '@/lib/auth';
-import { findUserById } from '@/lib/db';
+import { createClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
   try {
-    const token = request.cookies.get('auth-token')?.value;
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
 
-    if (!token) {
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (error || !user) {
       return NextResponse.json(
         { error: '인증이 필요합니다' },
         { status: 401 }
       );
     }
 
-    const payload = verifyToken(token);
-    if (!payload) {
-      return NextResponse.json(
-        { error: '유효하지 않은 토큰입니다' },
-        { status: 401 }
-      );
-    }
-
-    const user = await findUserById(payload.userId);
-    if (!user) {
-      return NextResponse.json(
-        { error: '사용자를 찾을 수 없습니다' },
-        { status: 404 }
-      );
-    }
+    // 프로필 정보 가져오기
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
 
     return NextResponse.json({
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
-        phone: user.phone,
-        companyName: user.companyName,
+        name: profile?.full_name || profile?.username || user.email,
+        phone: profile?.phone,
+        companyName: profile?.company_name,
       },
     });
   } catch (error) {
