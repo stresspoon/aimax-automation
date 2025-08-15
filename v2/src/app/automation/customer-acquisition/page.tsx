@@ -17,7 +17,7 @@ export default function CustomerAcquisitionPage() {
       apiKey: "",
       instructions: "",
       generatedContent: "",
-      generatedImages: [],
+      generatedImages: [] as string[],
     },
     step2: {
       sheetUrl: "",

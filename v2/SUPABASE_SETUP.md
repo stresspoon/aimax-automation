@@ -24,8 +24,10 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
 
 ### 방법 1: Supabase Dashboard에서 직접 실행
 1. SQL Editor 탭으로 이동
-2. `supabase/migrations/001_initial_schema.sql` 내용 복사
-3. 붙여넣기 후 실행
+2. 다음 파일들을 순서대로 실행:
+   - `supabase/migrations/001_initial_schema.sql` - 테이블 생성
+   - `supabase/migrations/002_enable_rls.sql` - RLS 활성화
+3. 각 파일 내용을 복사하여 SQL Editor에 붙여넣기 후 실행
 
 ### 방법 2: Supabase CLI 사용 (선택사항)
 ```bash
@@ -91,6 +93,10 @@ http://localhost:3001
 ## Row Level Security (RLS)
 
 모든 테이블에 RLS가 적용되어 있어 사용자는 자신의 데이터만 접근 가능합니다.
+
+**중요**: `002_enable_rls.sql` 마이그레이션을 실행하여 RLS를 활성화해야 합니다.
+- RLS가 활성화되지 않으면 Supabase Security Advisor에서 경고가 표시됩니다
+- 모든 public 스키마 테이블은 RLS가 활성화되어야 안전합니다
 
 ## 트러블슈팅
 
