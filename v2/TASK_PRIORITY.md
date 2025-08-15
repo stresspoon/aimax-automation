@@ -32,10 +32,10 @@
   - [x] projects 테이블
   - [x] orders 테이블
   - [x] tool_purchases 테이블
-- [ ] 기본 CRUD API 구현
-  - [ ] 사용자 API
-  - [ ] 프로젝트 API
-  - [ ] 캠페인 API
+- [x] 기본 CRUD API 구현
+  - [x] 사용자 API
+  - [x] 프로젝트 API
+  - [x] 캠페인 API
 
 #### 2. 고객모집 자동화 실제 연동
 - [ ] Gemini API 연동
@@ -173,6 +173,7 @@
   - ✅ DB 관리 간소화
   - ✅ Supabase 연동 설정 완료
   - ✅ 챗봇 팝업 UI 구현
+  - ✅ 기본 CRUD API 구현 (사용자, 캠페인, 프로젝트)
 
 ---
 
