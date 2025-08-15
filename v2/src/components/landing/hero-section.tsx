@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Header } from "./header"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
@@ -10,25 +9,47 @@ export function HeroSection() {
   const [activeStep, setActiveStep] = useState(0)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % 4)
-    }, 3000)
-    return () => clearInterval(interval)
+    const timer = setInterval(() => {
+      setActiveStep(prev => (prev + 1) % 4)
+    }, 700) // 0.7초마다 전환
+    
+    return () => clearInterval(timer)
   }, [])
 
   const steps = [
-    { id: 1, title: "콘텐츠 생성", description: "AI가 자동으로 마케팅 콘텐츠 작성" },
-    { id: 2, title: "고객 데이터 수집", description: "구글폼으로 자동 수집" },
-    { id: 3, title: "자동 선별", description: "타겟 고객 자동 필터링" },
-    { id: 4, title: "이메일 발송", description: "맞춤형 이메일 자동 발송" }
+    { 
+      id: 1, 
+      title: "콘텐츠 자동 발행", 
+      description: "AI가 마케팅 콘텐츠 작성",
+      animation: "type-animation"
+    },
+    { 
+      id: 2, 
+      title: "고객이 알아서 모임", 
+      description: "구글폼으로 자동 수집",
+      animation: "funnel-animation"
+    },
+    { 
+      id: 3, 
+      title: "DB 저장 → 메일 발송", 
+      description: "타겟 고객 자동 필터링",
+      animation: "mail-animation"
+    },
+    { 
+      id: 4, 
+      title: "콘텐츠가 차곡차곡", 
+      description: "맞춤형 이메일 자동 발송",
+      animation: "shelf-animation"
+    }
   ]
+
   return (
     <section
       className="flex flex-col items-center text-center relative mx-auto rounded-2xl overflow-hidden my-6 py-0 px-4
-         w-full h-[400px] md:w-[1220px] md:h-[600px] lg:h-[810px] md:px-0"
+         w-full h-[550px] md:w-[1220px] md:h-[750px] lg:h-[950px] md:px-0"
     >
-      {/* SVG Background */}
-      <div className="absolute inset-0 z-0">
+      {/* SVG Background with reduced opacity */}
+      <div className="absolute inset-0 z-0 opacity-70">
         <svg
           width="100%"
           height="100%"
@@ -53,226 +74,19 @@ export function HeroSection() {
               {/* Grid Rectangles */}
               {[...Array(35)].map((_, i) => (
                 <React.Fragment key={`row1-${i}`}>
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="9.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="45.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="81.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="117.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="153.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="189.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="225.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="261.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="297.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="333.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="369.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="405.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="441.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="477.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="513.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="549.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="585.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="621.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="657.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="693.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="729.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
-                  <rect
-                    x={-20.0891 + i * 36}
-                    y="765.2"
-                    width="35.6"
-                    height="35.6"
-                    stroke="#131313"
-                    strokeOpacity="0.08"
-                    strokeWidth="0.4"
-                    strokeDasharray="2 2"
-                  />
+                  {[...Array(23)].map((_, j) => (
+                    <rect
+                      key={`rect-${i}-${j}`}
+                      x={-20.0891 + i * 36}
+                      y={9.2 + j * 36}
+                      width="35.6"
+                      height="35.6"
+                      stroke="#131313"
+                      strokeOpacity="0.08"
+                      strokeWidth="0.4"
+                      strokeDasharray="2 2"
+                    />
+                  ))}
                 </React.Fragment>
               ))}
               {/* Specific Rectangles with fill */}
@@ -442,12 +256,7 @@ export function HeroSection() {
         </svg>
       </div>
 
-      {/* Header positioned at top of hero container */}
-      <div className="absolute top-0 left-0 right-0 z-20">
-        <Header />
-      </div>
-
-      <div className="relative z-10 space-y-4 md:space-y-5 lg:space-y-6 mb-6 md:mb-7 lg:mb-9 max-w-md md:max-w-[500px] lg:max-w-[588px] mt-20 md:mt-[120px] lg:mt-[160px] px-6 md:px-4">
+      <div className="relative z-10 space-y-4 md:space-y-5 lg:space-y-6 mb-6 md:mb-7 lg:mb-9 max-w-3xl md:max-w-4xl lg:max-w-5xl mt-16 md:mt-20 lg:mt-24 px-6 md:px-4">
         <h1 className="text-foreground text-2xl md:text-4xl lg:text-6xl font-semibold leading-tight">
           비용 <span className="text-primary">ZERO</span>, 성과 <span className="text-primary">MAX</span>
         </h1>
@@ -455,74 +264,116 @@ export function HeroSection() {
           인건비 없이도, 한 명이 팀처럼 일하는 마케팅 자동화 솔루션
         </p>
 
-        {/* 4단계 자동화 프로세스 애니메이션 */}
-        <div className="mt-8 mb-6">
-          <div className="flex justify-center space-x-2 md:space-x-4 mb-6">
+        {/* 4단계 자동화 프로세스 - 참고 코드 스타일 */}
+        <div className="mt-8 mb-4">
+          <div className="grid grid-cols-4 gap-2 md:gap-3 w-full">
             {steps.map((step, index) => (
               <div
                 key={step.id}
                 className={cn(
-                  "flex flex-col items-center transition-all duration-500",
-                  activeStep === index ? "scale-110" : "scale-100 opacity-60"
+                  "bg-background/90 border rounded-lg p-3 md:p-4 lg:p-5 relative overflow-hidden transition-all duration-100 h-[120px] md:h-[140px] lg:h-[160px]",
+                  activeStep === index 
+                    ? "border-primary shadow-lg scale-105" 
+                    : "border-border/50 opacity-60"
                 )}
               >
-                <div
-                  className={cn(
-                    "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-2 transition-all duration-500",
-                    activeStep === index
-                      ? "bg-primary text-primary-foreground shadow-lg"
-                      : "bg-muted text-muted-foreground"
-                  )}
-                >
-                  {step.id}
-                </div>
-                <p className="text-xs md:text-sm font-medium hidden md:block">{step.title}</p>
-                {activeStep === index && (
-                  <p className="text-xs text-muted-foreground mt-1 max-w-[120px] text-center hidden lg:block">
-                    {step.description}
-                  </p>
+                <h3 className="text-xs md:text-sm lg:text-base font-bold mb-2 relative whitespace-nowrap">
+                  {step.id}. {step.title}
+                  {/* Animated accent underline */}
+                  <span 
+                    className={cn(
+                      "absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-100",
+                      activeStep === index ? "w-full" : "w-0"
+                    )}
+                  />
+                </h3>
+
+                {/* Step 1: 타이핑 효과 */}
+                {step.id === 1 && activeStep === index && (
+                  <div className="absolute bottom-4 left-3 right-3 h-20 flex flex-col justify-center">
+                    <div className="typing-text text-xs md:text-sm font-mono text-primary overflow-hidden whitespace-nowrap">
+                      <span className="inline-block typing-animation">AI가 콘텐츠 작성중...</span>
+                    </div>
+                    <div className="typing-text text-xs md:text-sm font-mono text-primary/70 overflow-hidden whitespace-nowrap mt-1">
+                      <span className="inline-block typing-animation-delayed">블로그 포스트 생성</span>
+                    </div>
+                  </div>
                 )}
+
+                {/* Step 2: 파티클/퍼널 효과 */}
+                {step.id === 2 && activeStep === index && (
+                  <div className="absolute bottom-0 left-0 right-0 h-full overflow-hidden">
+                    <div className="relative h-full">
+                      {[...Array(15)].map((_, i) => (
+                        <div 
+                          key={i}
+                          className="lead-drop" 
+                          style={{ 
+                            left: `${20 + Math.random() * 50}%`, 
+                            animationDelay: `${Math.random() * 0.3}s`,
+                            animationDuration: `${0.4 + Math.random() * 0.2}s`
+                          }} 
+                        />
+                      ))}
+                    </div>
+                    <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-6 border-2 border-primary border-t-0 rounded-b-lg bg-gradient-to-b from-transparent to-primary/10" />
+                  </div>
+                )}
+
+                {/* Step 3: 메일 날아가기 */}
+                {step.id === 3 && activeStep === index && (
+                  <div className="absolute bottom-8 left-0 right-0 h-12 flex items-center">
+                    <div className="envelope-fly absolute w-12 md:w-14 lg:w-16 h-8 md:h-10 lg:h-12">
+                      <div className="relative w-full h-full bg-white border-2 border-primary rounded shadow-md">
+                        {/* 봉투 플랩 */}
+                        <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-br from-primary/10 to-primary/20 border-b border-primary" 
+                             style={{ clipPath: 'polygon(0 0, 50% 100%, 100% 0)' }} />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 4: 책장 쌓기 */}
+                {step.id === 4 && activeStep === index && (
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center items-end gap-1 h-20">
+                    {[...Array(8)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="book-grow w-3 md:w-4 lg:w-5 bg-primary rounded-sm"
+                        style={{ animationDelay: `${i * 0.05}s` }}
+                      />
+                    ))}
+                  </div>
+                )}
+
               </div>
             ))}
           </div>
-          
-          {/* Progress bar */}
-          <div className="w-full max-w-xs md:max-w-md mx-auto h-2 bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-primary transition-all duration-3000 ease-linear"
-              style={{ width: `${((activeStep + 1) / 4) * 100}%` }}
-            />
-          </div>
+
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 md:gap-8 justify-center items-center mt-6">
+        {/* 지표들 - 크기 1.4배로, 모바일에서도 가로 유지 */}
+        <div className="flex justify-center items-center gap-4 md:gap-8 mt-2">
           <div className="text-center">
-            <div className="text-xl md:text-3xl font-bold text-primary">↓ 70%</div>
-            <div className="text-xs md:text-sm text-muted-foreground">고정비</div>
+            <div className="text-xl md:text-3xl lg:text-4xl font-bold text-primary">↓ 70%</div>
+            <div className="text-sm md:text-base lg:text-lg text-muted-foreground">고정비</div>
           </div>
           <div className="text-center">
-            <div className="text-xl md:text-3xl font-bold text-primary">↑ 300%</div>
-            <div className="text-xs md:text-sm text-muted-foreground">업무 속도</div>
+            <div className="text-xl md:text-3xl lg:text-4xl font-bold text-primary">↑ 300%</div>
+            <div className="text-sm md:text-base lg:text-lg text-muted-foreground">업무 속도</div>
           </div>
           <div className="text-center">
-            <div className="text-xl md:text-3xl font-bold text-primary">↑ 200%</div>
-            <div className="text-xs md:text-sm text-muted-foreground">매출</div>
+            <div className="text-xl md:text-3xl lg:text-4xl font-bold text-primary">↑ 200%</div>
+            <div className="text-sm md:text-base lg:text-lg text-muted-foreground">매출</div>
           </div>
         </div>
       </div>
 
-      <div className="relative z-10 flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 px-6 md:px-0">
+      {/* Button with reduced spacing from metrics */}
+      <div className="relative z-10 flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-5 px-6 md:px-0 mb-12 md:mb-16">
         <Link href="/signup">
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-full font-medium text-base shadow-lg">
+          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-6 rounded-full font-bold text-lg shadow-lg h-auto">
             무료 체험 시작하기
-          </Button>
-        </Link>
-        <Link href="#features-section">
-          <Button
-            variant="outline"
-            className="border-foreground/20 text-foreground hover:bg-foreground/10 px-8 py-3 rounded-full font-medium text-base bg-transparent"
-          >
-            더 알아보기
           </Button>
         </Link>
       </div>
