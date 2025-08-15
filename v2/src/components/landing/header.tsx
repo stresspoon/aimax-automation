@@ -61,11 +61,11 @@ export function Header() {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/signup" className="hidden md:block">
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-full font-bold shadow-sm">
-              무료 체험 시작하기
-            </Button>
-          </Link>
+          <Button 
+            onClick={() => window.location.href = '/signup'}
+            className="hidden md:block bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-full font-bold shadow-sm">
+            무료 체험 시작하기
+          </Button>
           <Sheet>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon" className="text-foreground">
@@ -88,11 +88,11 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <Link href="/signup" className="w-full mt-4">
-                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-full font-bold shadow-sm w-full">
-                    무료 체험 시작하기
-                  </Button>
-                </Link>
+                <Button 
+                  onClick={() => window.location.href = '/signup'}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-full font-bold shadow-sm w-full mt-4">
+                  무료 체험 시작하기
+                </Button>
               </nav>
             </SheetContent>
           </Sheet>

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 export function HeroSection() {
@@ -371,11 +370,11 @@ export function HeroSection() {
 
       {/* Button with reduced spacing from metrics */}
       <div className="relative z-10 flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-5 px-6 md:px-0 mb-12 md:mb-16">
-        <Link href="/signup">
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-6 rounded-full font-bold text-lg shadow-lg h-auto">
-            무료 체험 시작하기
-          </Button>
-        </Link>
+        <Button 
+          onClick={() => window.location.href = '/signup'}
+          className="bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-6 rounded-full font-bold text-lg shadow-lg h-auto">
+          무료 체험 시작하기
+        </Button>
       </div>
     </section>
   )
