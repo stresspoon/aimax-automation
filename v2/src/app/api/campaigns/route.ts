@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(campaigns)
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(campaign, { status: 201 })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

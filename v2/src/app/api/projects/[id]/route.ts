@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -35,7 +35,7 @@ export async function GET(
     }
 
     return NextResponse.json(project)
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -89,7 +89,7 @@ export async function PUT(
     }
 
     return NextResponse.json(project)
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -98,7 +98,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -129,7 +129,7 @@ export async function DELETE(
     }
 
     return NextResponse.json({ message: 'Project deleted successfully' })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

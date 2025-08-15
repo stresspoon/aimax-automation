@@ -18,7 +18,7 @@ export default function SignupPage() {
     agreeMarketing: false,
   });
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [showToast, setShowToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const showNotification = (message: string, type: 'success' | 'error') => {
@@ -27,7 +27,7 @@ export default function SignupPage() {
   };
 
   const validateForm = () => {
-    const newErrors: any = {};
+    const newErrors: Record<string, string> = {};
 
     if (!formData.name) {
       newErrors.name = "이름을 입력해주세요";
@@ -89,17 +89,19 @@ export default function SignupPage() {
       setTimeout(() => {
         router.push("/dashboard");
       }, 1500);
-    } catch (error: any) {
-      showNotification(error.message || "회원가입에 실패했습니다", "error");
+    } catch (error) {
+      showNotification((error as Error).message || "회원가입에 실패했습니다", "error");
       setLoading(false);
     }
   };
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData({ ...formData, [field]: value });
     // 입력시 해당 필드 에러 제거
     if (errors[field]) {
-      setErrors({ ...errors, [field]: undefined });
+      const newErrors = { ...errors };
+      delete newErrors[field];
+      setErrors(newErrors);
     }
   };
 

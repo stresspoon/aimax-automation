@@ -6,17 +6,13 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, getTotalPrice, clearCart, hasHydrated } = useCartStore();
+  const { items, removeItem, updateQuantity, getTotalPrice, clearCart } = useCartStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleCheckout = () => {
-    // 임시 외부 결제 링크로 이동
-    window.open("https://toss.me/aimax", "_blank");
-  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("ko-KR", {

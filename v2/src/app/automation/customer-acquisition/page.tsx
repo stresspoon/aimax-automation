@@ -6,6 +6,16 @@ import Link from "next/link";
 
 type Step = 1 | 2 | 3;
 
+interface Candidate {
+  name: string;
+  email: string;
+  phone: string;
+  threads: number;
+  blog: number;
+  instagram: number;
+  status: "selected" | "notSelected";
+}
+
 export default function CustomerAcquisitionPage() {
   const [expandedStep, setExpandedStep] = useState<Step | null>(null);
   const [showToast, setShowToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
@@ -22,7 +32,7 @@ export default function CustomerAcquisitionPage() {
     step2: {
       sheetUrl: "",
       isRunning: false,
-      candidates: [],
+      candidates: [] as Candidate[],
     },
     step3: {
       targetType: "selected" as "selected" | "notSelected",
@@ -346,7 +356,7 @@ export default function CustomerAcquisitionPage() {
               <div className="mt-4">
                 <p className="text-sm text-muted-foreground mb-2">생성된 이미지:</p>
                 <div className="flex space-x-2">
-                  {projectData.step1.generatedImages.map((img, idx) => (
+                  {projectData.step1.generatedImages.map((_img, idx) => (
                     <div key={idx} className="w-20 h-20 bg-muted rounded flex items-center justify-center text-muted-foreground">
                       이미지 {idx + 1}
                     </div>

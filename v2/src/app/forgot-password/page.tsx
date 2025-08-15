@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
 export default function ForgotPasswordPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -36,8 +33,8 @@ export default function ForgotPasswordPage() {
       }
 
       setSubmitted(true);
-    } catch (error: any) {
-      setError(error.message || '오류가 발생했습니다');
+    } catch (error) {
+      setError((error as Error).message || '오류가 발생했습니다');
     } finally {
       setLoading(false);
     }

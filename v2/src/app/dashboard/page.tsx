@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useCartStore } from "@/stores/cartStore";
 
 export default function DashboardPage() {
-  const { addItem, getTotalItems, hasHydrated } = useCartStore();
+  const { addItem, getTotalItems } = useCartStore();
   const [mounted, setMounted] = useState(false);
   const [showCampaignModal, setShowCampaignModal] = useState(false);
   const [campaignName, setCampaignName] = useState("");
@@ -14,7 +14,7 @@ export default function DashboardPage() {
   useEffect(() => {
     setMounted(true);
   }, []);
-  const [userProjects, setUserProjects] = useState([
+  const [userProjects] = useState([
     // 임시 프로젝트 데이터 (실제로는 DB에서 가져옴)
     {
       id: 1,

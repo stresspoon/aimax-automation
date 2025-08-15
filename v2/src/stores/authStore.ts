@@ -18,7 +18,7 @@ interface AuthState {
   setUser: (user: User | null) => void;
   setLoading: (loading: boolean) => void;
   login: (email: string, password: string) => Promise<void>;
-  signup: (userData: any) => Promise<void>;
+  signup: (userData: { email: string; password: string; name?: string; phone?: string; companyName?: string; agreeMarketing?: boolean }) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }

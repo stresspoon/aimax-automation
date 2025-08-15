@@ -28,7 +28,7 @@ class ApiClient {
       }
 
       return { data }
-    } catch (error) {
+    } catch {
       return { error: 'Network error' }
     }
   }

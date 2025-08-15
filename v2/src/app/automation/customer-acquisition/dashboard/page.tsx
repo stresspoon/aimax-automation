@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function CustomerAcquisitionDashboard() {
-  const [projects, setProjects] = useState([
+  const [projects] = useState([
     {
       id: 1,
       name: "12월 마케팅 캠페인",
@@ -35,7 +35,7 @@ export default function CustomerAcquisitionDashboard() {
     },
   ]);
 
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     totalCampaigns: 3,
     activeCampaigns: 2,
     totalContents: 12,

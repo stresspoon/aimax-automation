@@ -3,6 +3,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+package-lock.json.backup
 
 # testing
 /coverage
@@ -13,19 +14,28 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
 *.pem
+.idea
+.vscode
+*.swp
+*.swo
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
 # local env files
 .env*.local
 .env
+.env.production
+.env.development
 
 # vercel
 .vercel
@@ -36,3 +46,23 @@ next-env.d.ts
 
 # template folders
 pointer-landing-template/
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+Thumbs.db
+
+# testing
+cypress/videos
+cypress/screenshots
+
+# bundle analyzer
+.next/analyze/
