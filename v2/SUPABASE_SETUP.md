@@ -102,6 +102,22 @@ http://localhost:3001
 - RLS가 활성화되지 않으면 Supabase Security Advisor에서 경고가 표시됩니다
 - 모든 public 스키마 테이블은 RLS가 활성화되어야 안전합니다
 
+## Performance Advisor 경고 해결
+
+### review 테이블 관련 경고
+만약 Performance Advisor에서 `review_packs`, `review_invites` 등의 테이블 관련 경고가 나타난다면:
+
+1. 이 테이블들이 현재 프로젝트에서 사용되지 않는 경우:
+   - `supabase/optimize_rls_policies.sql` 실행하여 RLS 비활성화
+   
+2. 완전히 삭제하려면:
+   ```sql
+   DROP TABLE IF EXISTS public.review_packs CASCADE;
+   DROP TABLE IF EXISTS public.review_invites CASCADE;
+   DROP TABLE IF EXISTS public.review_drafts CASCADE;
+   DROP TABLE IF EXISTS public.review_submissions CASCADE;
+   ```
+
 ## 트러블슈팅
 
 ### CORS 에러
