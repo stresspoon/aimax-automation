@@ -4,6 +4,7 @@ import ProjectActionsClient from "@/components/marketing/project-actions-client"
 import ProjectTabsClient from "@/components/marketing/project-tabs-client";
 import ProjectSyncClient from "@/components/marketing/project-sync-client";
 import PendingListClient from "@/components/marketing/pending-list-client";
+import ReviewStatus from "@/components/review/review-status";
 
 export default async function MarketingProjectPage({
   params,
@@ -29,6 +30,8 @@ export default async function MarketingProjectPage({
         <ProjectSyncClient projectId={projectId} />
         {/* pending list */}
         <PendingListClient projectId={projectId} />
+        {/* review status */}
+        <ReviewStatus projectId={projectId} />
       </div>
     </main>
   );

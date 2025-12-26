@@ -13,7 +13,9 @@
       "Bash(npm run dev:*)",
       "Bash(lsof:*)",
       "Bash(rm:*)",
-      "Bash(sudo:*)"
+      "Bash(sudo:*)",
+      "Bash(git fetch:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
